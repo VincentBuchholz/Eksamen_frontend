@@ -33,8 +33,8 @@ const Header = ({logout}) => {
                         }
                         {
                             isAdmin &&
-                            <LinkContainer to="/admin2">
-                                <Nav.Link>admin2</Nav.Link>
+                            <LinkContainer to="/createTenant">
+                                <Nav.Link>Add Tenant</Nav.Link>
                             </LinkContainer>
                         }
                         {
