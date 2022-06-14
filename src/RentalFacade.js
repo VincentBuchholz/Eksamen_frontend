@@ -53,6 +53,14 @@ function rentalFacade() {
         const options = makeOptions("GET",false,true); //True add's the token
         return fetch(URL + "api/rental/currenttenants/"+houseID, options).then(r => r.json());
     }
+    const getRentalByHouseID = (houseID) => {
+        const options = makeOptions("GET",false,true); //True add's the token
+        return fetch(URL + "api/rental/rentalshouse/"+houseID, options).then(r => r.json());
+    }
+    const createRental = (rental) => {
+        const options = makeOptions("POST", rental,true); //True add's the token
+        return fetch(URL + "api/rental/create", options).then(r => r.json());
+    }
 
 
 
@@ -87,6 +95,8 @@ function rentalFacade() {
         removeTenant,
         deleteRental,
         getCurrentTenantByHouseID,
+        getRentalByHouseID,
+        createRental
 
 
     }

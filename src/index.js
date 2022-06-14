@@ -16,6 +16,7 @@ import CreateTenant from "./components/CreateTenant";
 import CreateHouse from "./components/CreateHouse";
 import Rentals from "./components/Rentals";
 import RentalInfo from "./components/RentalInfo";
+import CreateRental from "./components/CreateRental";
 
 const rootElement = document.getElementById("root");
 const loggedIn = apiFacade.loggedIn()
@@ -29,6 +30,7 @@ render(
                 <Route path="houseInfoAdmin/:houseID" element={<HouseInfoAdmin/>}/>
                 <Route path="/createTenant" element={<CreateTenant/>}/>
                 <Route path="/createHouse" element={<CreateHouse/>}/>
+                <Route path="createRental" element={<CreateRental/>} />
                 <Route path="rentals" element={<Rentals/>}/>
                 <Route path="rentalInfo/:rentalID" element={<RentalInfo/>}/>
                 <Route path="/myRentals" element={<MyRentals/>}/>

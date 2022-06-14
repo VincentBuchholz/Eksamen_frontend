@@ -13,6 +13,11 @@ function houseFacade() {
         return fetch(URL + "api/house/create", options).then(r => r.json());
     }
 
+    const getHouseByID = (houseID) => {
+        const options = makeOptions("GET",false,true); //True add's the token
+        return fetch(URL + "api/house/"+houseID, options).then(r => r.json());
+    }
+
 
 
     const makeOptions = (method, body, addToken) => {
@@ -34,7 +39,8 @@ function houseFacade() {
 
     return{
         getAllHouses,
-        createHouse
+        createHouse,
+        getHouseByID,
 
     }
 }
