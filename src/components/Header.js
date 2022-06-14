@@ -26,8 +26,8 @@ const Header = ({logout}) => {
                         {
                             isAdmin &&
 
-                            <LinkContainer to="/admin1">
-                                <Nav.Link>Admin1</Nav.Link>
+                            <LinkContainer to="/houses">
+                                <Nav.Link>Houses</Nav.Link>
                             </LinkContainer>
 
                         }
