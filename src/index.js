@@ -10,6 +10,7 @@ import User3 from "./components/User3";
 import Admin1 from "./components/Admin1";
 import './waves.css'
 import MyRentals from "./components/MyRentals";
+import HouseDetails from "./components/HouseDetails";
 
 const rootElement = document.getElementById("root");
 const loggedIn = apiFacade.loggedIn()
@@ -23,6 +24,7 @@ render(
                 <Route path="/admin2" element={<Admin2/>}/>
                 <Route path="/admin3" element={<Admin3/>}/>
                 <Route path="/myRentals" element={<MyRentals/>}/>
+                <Route path="houseDetails/:rentalID" element={<HouseDetails/>}/>
                 <Route path="/user2" element={<User2/>}/>
                 <Route path="/user3" element={<User3/>}/>
 

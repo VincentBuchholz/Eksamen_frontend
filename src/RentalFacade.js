@@ -9,6 +9,11 @@ function rentalFacade() {
         return fetch(URL + "api/rental/rentals/"+userID, options).then(r => r.json());
     }
 
+    const getHouseByRentalID = (rentalID) => {
+        const options = makeOptions("GET"); //True add's the token
+        return fetch(URL + "api/rental/house/"+rentalID, options).then(r => r.json());
+    }
+
 
     const makeOptions = (method, body, addToken) => {
         var opts = {
@@ -29,6 +34,7 @@ function rentalFacade() {
 
     return{
         getRentalsByUserID,
+        getHouseByRentalID,
 
     }
 }
