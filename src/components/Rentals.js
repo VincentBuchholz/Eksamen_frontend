@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Container, Table} from "react-bootstrap";
+import {Button, Container, Table} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import rentalFacade from "../RentalFacade";
 
@@ -9,6 +9,13 @@ const Rentals = () => {
     useEffect(()=>{
         rentalFacade.getAllRentals().then(rentals => setRentals(rentals))
     },[])
+
+    const handleRemove = (e) => {
+        const rentalID = e.target.value;
+        rentalFacade.deleteRental(rentalID)
+        if(rentals) {const newRentals = rentals.filter((rental) => rental.id != rentalID);
+            setRentals(newRentals)}
+    };
     return (
         <div>
             <Container className="shadow-lg p-5 mb-5 bg-white rounded mt-5">
@@ -27,6 +34,7 @@ const Rentals = () => {
                                 <th>Deposit</th>
                                 <th>Contact</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -39,9 +47,12 @@ const Rentals = () => {
                                         <td>{rental.price}</td>
                                         <td>{rental.deposit}</td>
                                         <td>{rental.contact}</td>
+                                        <td>
                                         <Link to={"/rentalInfo/"+rental.id}
                                               key={rental.id}
                                         >Change</Link>
+                                        </td>
+                                        <td><Button type="button" onClick={handleRemove} key={rental.id} value={rental.id} className="btn-danger">remove</Button></td>
 
                                     </tr>
                                 )

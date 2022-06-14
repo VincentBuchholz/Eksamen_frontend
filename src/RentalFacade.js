@@ -44,6 +44,11 @@ function rentalFacade() {
         return fetch(URL + "api/rental/removetenant/"+rentalID+"/"+tenantID, options).then(r => r.json());
     }
 
+    const deleteRental = (rentalID) => {
+        const options = makeOptions("DELETE",null,true); //True add's the token
+        return fetch(URL + "api/rental/delete/"+rentalID, options).then(r => r.json());
+    }
+
 
 
 
@@ -75,6 +80,8 @@ function rentalFacade() {
         setHouse,
         addTenant,
         removeTenant,
+        deleteRental,
+
 
     }
 }
