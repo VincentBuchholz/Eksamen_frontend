@@ -1,10 +1,13 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {Button, Container, Form} from "react-bootstrap";
 import userFacade from "../userFacade";
 
 const CreateTenant = () => {
     const initialState = {name: "", phone: "", job: "", username: "", password: ""};
     const [tenant, setTenant] = useState(initialState);
+    const [errorMsg, setErrorMsg] = useState("");
+    const errorAlertMsg = useRef(null);
+    const successAlertMsg = useRef(null);
 
 
     const handleInput = (event) => {
@@ -16,10 +19,19 @@ const CreateTenant = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        userFacade.createUser(tenant).catch(err => {
-            console.log(err)
-        });
-        setTenant(initialState);
+        userFacade.createUser(tenant).then(response =>{
+            const status = response.code;
+            const msg = response.message;
+                if(status){
+                    setErrorMsg(msg)
+                    errorAlertMsg.current.style.display = 'block';
+                    setTimeout(function() {errorAlertMsg.current.style.display = 'none'},3000)
+                } else{
+                    successAlertMsg.current.style.display = 'block';
+                    setTimeout(function() {successAlertMsg.current.style.display = 'none'},3000)
+                }
+                    setTenant(initialState);
+        })
     }
 
 
@@ -28,6 +40,12 @@ const CreateTenant = () => {
         <Container className="shadow-lg p-3 mb-5 bg-white rounded mt-5">
             <h2 className={"text-center" }>Add new Tenant</h2>
             <Form onChange={handleInput} onSubmit={handleSubmit}>
+                <div ref={errorAlertMsg} className="alert alert-danger" style={{display:"none"}}>
+                    <strong>Username is taken!</strong>
+                </div>
+                <div ref={successAlertMsg} className="alert alert-success" style={{display:"none"}}>
+                    <strong>User has been created</strong>
+                </div>
                 <Form.Group className="mb-3" controlId="name">
                     <Form.Label>Name</Form.Label>
                     <Form.Control required type="text" value={tenant.name}  placeholder="Name" />

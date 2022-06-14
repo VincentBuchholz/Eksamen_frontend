@@ -84,10 +84,6 @@ const CreateRental = () => {
                             Add rental
                         </Button>
 
-                        {
-                            JSON.stringify(rental)
-                        }
-
                     </Form>
                 </Container>
             </div>
