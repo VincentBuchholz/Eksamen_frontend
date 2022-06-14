@@ -29,6 +29,10 @@ function rentalFacade() {
         fetch(URL + "api/rental/updateinfo", options).then(r => r.json());
     }
 
+    const setHouse = (rentalID,houseID) => {
+        const options = makeOptions("PUT",null,true); //True add's the token
+        return fetch(URL + "api/rental/changehouse/"+rentalID+"/"+houseID, options).then(r => r.json());
+    }
 
 
 
@@ -57,6 +61,7 @@ function rentalFacade() {
         getAllRentals,
         getRentalByID,
         updateRentalInfo,
+        setHouse,
 
     }
 }

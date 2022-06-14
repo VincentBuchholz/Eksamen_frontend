@@ -3,27 +3,43 @@ import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import {useParams} from "react-router-dom";
 import rentals from "./Rentals";
 import rentalFacade from "../RentalFacade";
+import houseFacade from "../houseFacade";
 
 const RentalInfo = () => {
     const parms = useParams();
     const[rental,setRental] = useState();
+    const[house,setHouse] = useState();
+    const[houses,setHouses] = useState();
+    const[newHouseID,setNewHouseID] = useState();
+
+    useEffect(()=>{
+        rentalFacade.getRentalByID(parms.rentalID).then(rental => setRental(rental));
+        rentalFacade.getHouseByRentalID(parms.rentalID).then(house => setHouse(house));
+        houseFacade.getAllHouses().then(houses => setHouses(houses));
+    },[])
+
 
     function handleChangeRental(event) {
         const target = event.target
         const id = target.id
         const value = target.value
         setRental({...rental, [id]: value})
-    }
 
+    }
     function handleSubmitRental(e) {
         e.preventDefault();
         rentalFacade.updateRentalInfo(rental)
+
     }
 
+    function handleChangeHouse(e) {
+        setNewHouseID(e.target.value);
+    }
 
-    useEffect(()=>{
-        rentalFacade.getRentalByID(parms.rentalID).then(rental => setRental(rental))
-    },[])
+    function handleSubmitHouse(e) {
+        e.preventDefault();
+        rentalFacade.setHouse(parms.rentalID,newHouseID);
+    }
     return (
         <div>
             <Container className="shadow-lg p-5 mb-5 bg-white rounded mt-5">
@@ -60,6 +76,33 @@ const RentalInfo = () => {
                             }
                         </Col>
                         <Col>
+                            {
+                                house &&
+                                <div className="ms-3">
+                                    <h1>House info:</h1>
+
+                                <h5>House nr: {house.id}</h5>
+                                <h5>Address: {house.address}</h5>
+                                <h5>City: {house.city}</h5>
+                                <h5>Amount of rooms: {house.rooms}</h5>
+
+                                    <h3 className="mt-5">Change house</h3>
+                                    <Form onChange={handleChangeHouse} onSubmit={handleSubmitHouse} >
+                                        <Form.Group className="mb-3">
+                                            <Form.Label htmlFor="houseID">Select house</Form.Label>
+                                            <Form.Select id="houseID">
+                                                <option value={""} selected disabled hidden>Select house</option>
+                                                {houses && houses.map((house) => {
+                                                        return <option key={house.id}  value={house.id}>{house.id} - {house.address}, {house.city}</option>
+                                                    }
+                                                )}
+                                            </Form.Select>
+                                        </Form.Group>
+                                        <Button type="submit">Change house</Button>
+                                    </Form>
+
+                                </div>
+                            }
 
                         </Col>
                     </Row>
