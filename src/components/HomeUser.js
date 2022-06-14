@@ -10,7 +10,8 @@ const Home = () => {
         return (
             <Container className="shadow-lg p-5 mb-5 bg-white rounded mt-5">
                 <div className={"mb-5"}>
-                    <h1>Homepage user</h1>
+                    <h1>Welcome back!</h1>
+                    <p>Use the navigation menu to look at your rentals.</p>
                 </div>
 
 

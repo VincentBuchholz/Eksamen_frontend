@@ -5,7 +5,7 @@ import userFacade from "../userFacade";
 import houseFacade from "../houseFacade";
 
 const CreateHouse = () => {
-    const initialState = {address: "", city: "", rooms: ""};
+    const initialState = {address: "", city: "", rooms: "",img:""};
     const [house, setHouse] = useState(initialState);
 
 
@@ -41,6 +41,10 @@ const CreateHouse = () => {
                 <Form.Group className="mb-3" controlId="rooms">
                     <Form.Label>Amount of rooms</Form.Label>
                     <Form.Control required type="number" value={house.rooms}  placeholder="Amount of rooms" />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="img">
+                    <Form.Label>Image url</Form.Label>
+                    <Form.Control required type="text" value={house.img}  placeholder="Image url" />
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     Add house

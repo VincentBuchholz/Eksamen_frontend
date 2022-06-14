@@ -40,30 +40,29 @@ const HouseInfoAdmin = () => {
                         <Col className="shadow-lg p-5 mb-5 bg-white rounded mt-5 ms-5">
                             <h1>Current tenants in this house</h1>
 
-
-                            <Table bordered hover className="">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Phone</th>
-                                    <th>Job</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {currentTenants &&
-                                    currentTenants.map((tenant) =>
-
-
-                                        <tr key={tenant.id}>
-                                            <td>{tenant.id}</td>
-                                            <td>{tenant.name}</td>
-                                            <td>{tenant.phone}</td>
-                                            <td>{tenant.job}</td>
-                                        </tr>
-                                    )}
-                                </tbody>
-                            </Table>
+                            {currentTenants &&
+                                <Table bordered hover className="">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Phone</th>
+                                        <th>Job</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {currentTenants &&
+                                        currentTenants.map((tenant) =>
+                                            <tr key={tenant.id}>
+                                                <td>{tenant.id}</td>
+                                                <td>{tenant.name}</td>
+                                                <td>{tenant.phone}</td>
+                                                <td>{tenant.job}</td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </Table>
+                            }
                         </Col>
                     </Row>
 

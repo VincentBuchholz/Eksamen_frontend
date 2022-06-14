@@ -42,9 +42,11 @@ const MyRentals = () => {
                                     <td>{rental.price}</td>
                                     <td>{rental.deposit}</td>
                                     <td>{rental.contact}</td>
+                                    <td>
                                     <Link to={"/houseDetails/"+rental.id}
                                           key={rental.id}
                                     >Info</Link>
+                                    </td>
 
                                 </tr>
                             )

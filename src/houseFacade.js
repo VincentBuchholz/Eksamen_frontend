@@ -3,9 +3,9 @@ import settings from "./Settings";
 function houseFacade() {
     const URL = settings.getUrl();
 
-    const getAllHouses = () => {
+    const getAllHouses = async () => {
         const options = makeOptions("GET"); //True add's the token
-        return fetch(URL + "api/house/all", options).then(r => r.json());
+        return await fetch(URL + "api/house/all", options).then(r => r.json());
     }
 
     const createHouse = (house) => {

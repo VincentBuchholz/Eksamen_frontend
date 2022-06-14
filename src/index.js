@@ -4,8 +4,6 @@ import App from "./App";
 import Home from "./components/Home";
 import apiFacade from "./apiFacade";
 
-import User2 from "./components/User2";
-import User3 from "./components/User3";
 import Houses from "./components/Houses";
 import './waves.css'
 import './cardList.css'
@@ -35,8 +33,6 @@ render(
                 <Route path="rentalInfo/:rentalID" element={<RentalInfo/>}/>
                 <Route path="/myRentals" element={<MyRentals/>}/>
                 <Route path="houseDetails/:rentalID" element={<HouseDetails/>}/>
-                <Route path="/user2" element={<User2/>}/>
-                <Route path="/user3" element={<User3/>}/>
 
             </Route>
             <Route

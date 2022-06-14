@@ -24,6 +24,7 @@ const Houses = () => {
                             <Card  style={{ width: '18rem' }} >
                                 <Card.Body>
                                     <Card.Title>{house.id}</Card.Title>
+                                    <Card.Img variant="top" src={house.img}  alt="house-img"/>
                                     <Card.Text>
                                         Address: {house.address} <br/>
                                         City: {house.city} <br/>

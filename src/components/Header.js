@@ -74,22 +74,6 @@ const Header = ({logout}) => {
                             </LinkContainer>
 
                         }
-                        {
-                            !isAdmin &&
-
-                            <LinkContainer to="/user2">
-                                <Nav.Link>user2</Nav.Link>
-                            </LinkContainer>
-
-                        }
-                        {
-                            !isAdmin &&
-
-                            <LinkContainer to="/user3">
-                                <Nav.Link>user3</Nav.Link>
-                            </LinkContainer>
-
-                        }
                         <Button className="float-end" onClick={logout}>Log out</Button>
                     </Nav>
                 </Navbar.Collapse>
