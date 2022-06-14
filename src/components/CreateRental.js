@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Button, Container, Form} from "react-bootstrap";
 import houseFacade from "../houseFacade";
 import userFacade from "../userFacade";
 import rentalFacade from "../RentalFacade";
+
 
 const CreateRental = () => {
 
@@ -10,6 +11,9 @@ const CreateRental = () => {
     const [rental,setRental] = useState(initialState);
     const[houses,setHouses] = useState();
     const[tenants,setTenants] = useState();
+    const [errorMsg, setErrorMsg] = useState("");
+    const errorAlertMsg = useRef(null);
+    const successAlertMsg = useRef(null);
 
     useEffect(()=>{
         houseFacade.getAllHouses().then(houses => setHouses(houses));
@@ -25,10 +29,19 @@ const CreateRental = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        rentalFacade.createRental(rental).then(err =>{
-            console.log(err.status)
-            })
-        setRental(initialState)
+        rentalFacade.createRental(rental).then(response =>{
+            const status = response.code;
+            const msg = response.message;
+            if(status){
+                setErrorMsg(msg)
+                errorAlertMsg.current.style.display = 'block';
+                setTimeout(function() {errorAlertMsg.current.style.display = 'none'},3000)
+            } else{
+                successAlertMsg.current.style.display = 'block';
+                setTimeout(function() {successAlertMsg.current.style.display = 'none'},3000)
+            }
+            setRental(initialState);
+        })
     }
     return (
             <div>
@@ -36,6 +49,12 @@ const CreateRental = () => {
 
                         <h1>Add new rental</h1>
                     <Form onChange={handleInput} onSubmit={handleSubmit}>
+                        <div ref={errorAlertMsg} className="alert alert-danger" style={{display:"none"}}>
+                            <strong>{errorMsg}</strong>
+                        </div>
+                        <div ref={successAlertMsg} className="alert alert-success" style={{display:"none"}}>
+                            <strong>Rental has been created</strong>
+                        </div>
                         <Form.Group className="mb-3" controlId="start">
                             <Form.Label>Start date</Form.Label>
                             <Form.Control required type="text" value={rental.start}  placeholder="dd/MM/yyyy" />
@@ -46,7 +65,7 @@ const CreateRental = () => {
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="price">
                             <Form.Label>Annual price</Form.Label>
-                            <Form.Control required type="text" value={rental.price}  placeholder="Annual price" />
+                            <Form.Control required type="number" value={rental.price}  placeholder="Annual price" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="deposit">
                             <Form.Label>Deposit</Form.Label>

@@ -41,7 +41,7 @@ const CreateTenant = () => {
             <h2 className={"text-center" }>Add new Tenant</h2>
             <Form onChange={handleInput} onSubmit={handleSubmit}>
                 <div ref={errorAlertMsg} className="alert alert-danger" style={{display:"none"}}>
-                    <strong>Username is taken!</strong>
+                    <strong>{errorMsg}</strong>
                 </div>
                 <div ref={successAlertMsg} className="alert alert-success" style={{display:"none"}}>
                     <strong>User has been created</strong>
