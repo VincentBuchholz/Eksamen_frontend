@@ -1,20 +1,12 @@
 import settings from "./Settings";
 
-function rentalFacade() {
+function houseFacade() {
     const URL = settings.getUrl();
 
-
-    const getRentalsByUserID = (userID) => {
+    const getAllHouses = () => {
         const options = makeOptions("GET"); //True add's the token
-        return fetch(URL + "api/rental/rentals/"+userID, options).then(r => r.json());
+        return fetch(URL + "api/house/all", options).then(r => r.json());
     }
-
-    const getHouseByRentalID = (rentalID) => {
-        const options = makeOptions("GET"); //True add's the token
-        return fetch(URL + "api/rental/house/"+rentalID, options).then(r => r.json());
-    }
-
-
 
 
     const makeOptions = (method, body, addToken) => {
@@ -35,13 +27,12 @@ function rentalFacade() {
     }
 
     return{
-        getRentalsByUserID,
-        getHouseByRentalID,
+        getAllHouses,
 
     }
 }
 
 
 
-const facade = rentalFacade();
+const facade = houseFacade();
 export default facade;

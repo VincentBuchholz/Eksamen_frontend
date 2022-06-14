@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {Card, Container} from "react-bootstrap";
-import rentalFacade from "../RentalFacade";
+
 import {Link} from "react-router-dom";
+import houseFacade from "../houseFacade";
 
 const Houses = () => {
     const [houses,sethouses] = useState();
     useEffect(()=>{
-        rentalFacade.getAllHouses().then(houses => sethouses(houses))
+        houseFacade.getAllHouses().then(houses => sethouses(houses))
     },[])
 
 
