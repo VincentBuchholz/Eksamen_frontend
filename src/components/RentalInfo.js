@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Col, Container, Form, Row} from "react-bootstrap";
+import {Button, Col, Container, Form, Row, Table} from "react-bootstrap";
 import {useParams} from "react-router-dom";
 import rentals from "./Rentals";
 import rentalFacade from "../RentalFacade";
 import houseFacade from "../houseFacade";
+import userFacade from "../userFacade";
 
 const RentalInfo = () => {
     const parms = useParams();
@@ -11,11 +12,16 @@ const RentalInfo = () => {
     const[house,setHouse] = useState();
     const[houses,setHouses] = useState();
     const[newHouseID,setNewHouseID] = useState();
+    const[currentTenants,setCurrentTenants] = useState();
+    const[tenants, setTenants] = useState();
+    const[newTenant,setNewTenant] = useState();
 
     useEffect(()=>{
         rentalFacade.getRentalByID(parms.rentalID).then(rental => setRental(rental));
         rentalFacade.getHouseByRentalID(parms.rentalID).then(house => setHouse(house));
         houseFacade.getAllHouses().then(houses => setHouses(houses));
+        userFacade.getTenantsByRentalID(parms.rentalID).then(tenants => setCurrentTenants(tenants));
+        userFacade.getAllTenants().then(tenants => setTenants(tenants));
     },[])
 
 
@@ -40,14 +46,35 @@ const RentalInfo = () => {
         e.preventDefault();
         rentalFacade.setHouse(parms.rentalID,newHouseID);
     }
+
+    function handleChangeAddTenant(event) {
+        const target = event.target
+        const value = target.value
+        let selectedTenant = tenants.find(tenant => tenant.id === Number(value))
+        setNewTenant(selectedTenant);
+    }
+
+    function handleSubmitAddTenant(e) {
+        e.preventDefault();
+        setCurrentTenants([...currentTenants,newTenant])
+        rentalFacade.addTenant(parms.rentalID,newTenant.id);
+
+    }
+
+    const handleRemove = (e) => {
+        const tenantID = e.target.value;
+        rentalFacade.removeTenant(parms.rentalID,tenantID)
+        if(currentTenants) {const newTenants = currentTenants.filter((tenant) => tenant.id != tenantID);
+            setCurrentTenants(newTenants)}
+    };
     return (
         <div>
-            <Container className="shadow-lg p-5 mb-5 bg-white rounded mt-5">
+            <Container >
                 <div className={"mb-5"}>
 
                     <Row>
 
-                        <Col>
+                        <Col className="shadow-lg p-5 mb-5 bg-white rounded mt-5 me-5">
                                 <h1>Rental info for rental nr: {parms.rentalID}</h1>
                             {
                                 rental &&
@@ -75,7 +102,7 @@ const RentalInfo = () => {
                                 </Form>
                             }
                         </Col>
-                        <Col>
+                        <Col className="shadow-lg p-5 mb-5 bg-white rounded mt-5 me-5">
                             {
                                 house &&
                                 <div className="ms-3">
@@ -103,8 +130,60 @@ const RentalInfo = () => {
 
                                 </div>
                             }
-
                         </Col>
+                    </Row>
+                    <Row className="shadow-lg p-5 mb-5 bg-white rounded me-5 ">
+                        <h3 className="mt-5">Tenants:</h3>
+
+                        <Table bordered hover className="mt-2">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>phone</th>
+                                <th>Job</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+
+                            {currentTenants &&
+                                currentTenants.map((tenant) =>
+                                    <tr key={tenant.id}>
+                                        <td>{tenant.name}</td>
+                                        <td>{tenant.phone}</td>
+                                        <td>{tenant.job}</td>
+                                        <td><Button type="button" onClick={handleRemove} key={tenant.id} value={tenant.id} className="btn-danger">remove</Button></td>
+
+                                    </tr>
+                                )
+                            }
+                            </tbody>
+                        </Table>
+
+                        {
+                            tenants &&
+                            <div>
+
+                                <h4 className="mt-3"> Add tenant</h4>
+
+                                <Form onChange={handleChangeAddTenant} onSubmit={handleSubmitAddTenant}>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label htmlFor="tenants">Select tenant to add</Form.Label>
+                                        <Form.Select id="tenants">
+                                            <option value={""} selected disabled hidden>Select tenant</option>
+                                            {
+                                                tenants.map((tenant) => {
+                                                        return <option key={tenant.id}  value={tenant.id}>{tenant.id} - {tenant.name} - {tenant.phone}</option>
+                                                    }
+                                                )}
+
+                                        </Form.Select>
+                                    </Form.Group>
+                                    <Button type="submit">Add tenant</Button>
+                                </Form>
+                            </div>
+                        }
                     </Row>
                 </div>
             </Container>

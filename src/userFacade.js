@@ -9,6 +9,15 @@ function userFacade() {
         return fetch(URL + "api/user", options).then(r => r.json());
     }
 
+    const getAllTenants = () => {
+        const options = makeOptions("GET", null,true); //True add's the token
+        return fetch(URL + "api/user/all", options).then(r => r.json());
+    }
+    const getTenantsByRentalID= (rentalID) => {
+        const options = makeOptions("GET", null,true); //True add's the token
+        return fetch(URL + "api/user/"+rentalID, options).then(r => r.json());
+    }
+
 
 
     const makeOptions = (method, body, addToken) => {
@@ -30,6 +39,8 @@ function userFacade() {
 
     return{
         createUser,
+        getAllTenants,
+        getTenantsByRentalID,
 
     }
 }
