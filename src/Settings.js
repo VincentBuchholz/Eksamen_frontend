@@ -1,5 +1,5 @@
 function Settings(){
-    const URL = "vincehub.dk/tomcat/exam/api/"
+    const URL = "http://localhost:8080/exam_war_exploded/"
 
     function getUrl() {
         return URL;

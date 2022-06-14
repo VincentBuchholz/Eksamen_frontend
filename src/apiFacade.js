@@ -1,7 +1,8 @@
 import {Link} from "react-router-dom";
+import settings from "./Settings";
 
 
-const URL = "http://localhost:8080/exam_war_exploded";
+const URL = settings.getUrl();
 
 function handleHttpErrors(res) {
     if (!res.ok) {
@@ -17,7 +18,7 @@ function apiFacade() {
 
     const login = (user, password) => {
         const options = makeOptions("POST", true,{username: user, password: password });
-        return fetch(URL + "/api/login", options)
+        return fetch(URL + "api/login", options)
             .then(handleHttpErrors)
             .then(res => {
                 setToken(res.token)
@@ -38,7 +39,7 @@ function apiFacade() {
 
     const fetchData = () => {
         const options = makeOptions("GET",true); //True add's the token
-        return fetch(URL + "/api/info/user", options).then(handleHttpErrors);
+        return fetch(URL + "api/info/user", options).then(handleHttpErrors);
     }
     const makeOptions= (method,addToken,body) =>{
         var opts = {
