@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Button, Col, Container, Form, Row, Table} from "react-bootstrap";
 import {useParams} from "react-router-dom";
-import rentals from "./Rentals";
 import rentalFacade from "../RentalFacade";
 import houseFacade from "../houseFacade";
 import userFacade from "../userFacade";
+
 
 const RentalInfo = () => {
     const parms = useParams();
@@ -15,6 +15,9 @@ const RentalInfo = () => {
     const[currentTenants,setCurrentTenants] = useState();
     const[tenants, setTenants] = useState();
     const[newTenant,setNewTenant] = useState();
+    const errorAlertMsg = useRef(null);
+    const successAlertMsg = useRef(null);
+    const [errorMsg, setErrorMsg] = useState("");
 
     useEffect(()=>{
         rentalFacade.getRentalByID(parms.rentalID).then(rental => setRental(rental));
@@ -34,7 +37,18 @@ const RentalInfo = () => {
     }
     function handleSubmitRental(e) {
         e.preventDefault();
-        rentalFacade.updateRentalInfo(rental)
+        rentalFacade.updateRentalInfo(rental).then(response =>{
+            const status = response.code;
+            const msg = response.message;
+            if(status){
+                setErrorMsg(msg)
+                errorAlertMsg.current.style.display = 'block';
+                setTimeout(function() {errorAlertMsg.current.style.display = 'none'},3000)
+            } else{
+                successAlertMsg.current.style.display = 'block';
+                setTimeout(function() {successAlertMsg.current.style.display = 'none'},3000)
+            }
+        })
 
     }
 
@@ -45,6 +59,7 @@ const RentalInfo = () => {
     function handleSubmitHouse(e) {
         e.preventDefault();
         rentalFacade.setHouse(parms.rentalID,newHouseID);
+        houseFacade.getHouseByID(newHouseID).then(house => setHouse(house));
     }
 
     function handleChangeAddTenant(event) {
@@ -79,6 +94,12 @@ const RentalInfo = () => {
                             {
                                 rental &&
                                 <Form onChange={handleChangeRental} onSubmit={handleSubmitRental}>
+                                    <div ref={errorAlertMsg} className="alert alert-danger" style={{display:"none"}}>
+                                        <strong>{errorMsg}</strong>
+                                    </div>
+                                    <div ref={successAlertMsg} className="alert alert-success" style={{display:"none"}}>
+                                        <strong>Updated</strong>
+                                    </div>
                                 <Form.Group className="mb-3" controlId="start">
                                 <Form.Label>Start date</Form.Label>
                                 <Form.Control required type="text" value={rental.start}

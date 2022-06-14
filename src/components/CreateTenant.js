@@ -52,7 +52,7 @@ const CreateTenant = () => {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="phone">
                     <Form.Label>Phone</Form.Label>
-                    <Form.Control required type="text" value={tenant.phone}  placeholder="Lastname" />
+                    <Form.Control required type="text" value={tenant.phone}  placeholder="Phone" />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="job">
                     <Form.Label>Job</Form.Label>

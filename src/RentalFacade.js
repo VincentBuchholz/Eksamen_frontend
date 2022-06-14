@@ -5,28 +5,28 @@ function rentalFacade() {
 
 
     const getRentalsByUserID = (userID) => {
-        const options = makeOptions("GET"); //True add's the token
+        const options = makeOptions("GET",false,true); //True add's the token
         return fetch(URL + "api/rental/rentals/"+userID, options).then(r => r.json());
     }
 
     const getHouseByRentalID = (rentalID) => {
-        const options = makeOptions("GET"); //True add's the token
+        const options = makeOptions("GET",false,true); //True add's the token
         return fetch(URL + "api/rental/house/"+rentalID, options).then(r => r.json());
     }
 
     const getAllRentals = () => {
-        const options = makeOptions("GET"); //True add's the token
+        const options = makeOptions("GET",false,true); //True add's the token
         return fetch(URL + "api/rental/all", options).then(r => r.json());
     }
 
     const getRentalByID = (rentalID) => {
-        const options = makeOptions("GET"); //True add's the token
+        const options = makeOptions("GET",false,true); //True add's the token
         return fetch(URL + "api/rental/"+rentalID, options).then(r => r.json());
     }
 
     const updateRentalInfo = (rental) => {
         const options = makeOptions("PUT", rental,true); //True add's the token
-        fetch(URL + "api/rental/updateinfo", options).then(r => r.json());
+        return fetch(URL + "api/rental/updateinfo", options).then(r => r.json());
     }
 
     const setHouse = (rentalID,houseID) => {
