@@ -4,7 +4,6 @@ import App from "./App";
 import Home from "./components/Home";
 import apiFacade from "./apiFacade";
 
-import Admin3 from "./components/Admin3";
 import User2 from "./components/User2";
 import User3 from "./components/User3";
 import Houses from "./components/Houses";
@@ -14,6 +13,9 @@ import MyRentals from "./components/MyRentals";
 import HouseDetails from "./components/HouseDetails";
 import HouseInfoAdmin from "./components/HouseInfoAdmin";
 import CreateTenant from "./components/CreateTenant";
+import CreateHouse from "./components/CreateHouse";
+import Rentals from "./components/Rentals";
+import RentalInfo from "./components/RentalInfo";
 
 const rootElement = document.getElementById("root");
 const loggedIn = apiFacade.loggedIn()
@@ -26,7 +28,9 @@ render(
                 <Route path="/houses" element={<Houses/>}/>
                 <Route path="houseInfoAdmin/:houseID" element={<HouseInfoAdmin/>}/>
                 <Route path="/createTenant" element={<CreateTenant/>}/>
-                <Route path="/admin3" element={<Admin3/>}/>
+                <Route path="/createHouse" element={<CreateHouse/>}/>
+                <Route path="rentals" element={<Rentals/>}/>
+                <Route path="rentalInfo/:rentalID" element={<RentalInfo/>}/>
                 <Route path="/myRentals" element={<MyRentals/>}/>
                 <Route path="houseDetails/:rentalID" element={<HouseDetails/>}/>
                 <Route path="/user2" element={<User2/>}/>

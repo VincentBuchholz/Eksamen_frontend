@@ -14,6 +14,23 @@ function rentalFacade() {
         return fetch(URL + "api/rental/house/"+rentalID, options).then(r => r.json());
     }
 
+    const getAllRentals = () => {
+        const options = makeOptions("GET"); //True add's the token
+        return fetch(URL + "api/rental/all", options).then(r => r.json());
+    }
+
+    const getRentalByID = (rentalID) => {
+        const options = makeOptions("GET"); //True add's the token
+        return fetch(URL + "api/rental/"+rentalID, options).then(r => r.json());
+    }
+
+    const updateRentalInfo = (rental) => {
+        const options = makeOptions("PUT", rental,true); //True add's the token
+        fetch(URL + "api/rental/updateinfo", options).then(r => r.json());
+    }
+
+
+
 
 
 
@@ -37,6 +54,9 @@ function rentalFacade() {
     return{
         getRentalsByUserID,
         getHouseByRentalID,
+        getAllRentals,
+        getRentalByID,
+        updateRentalInfo,
 
     }
 }

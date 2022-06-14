@@ -49,7 +49,7 @@ const CreateTenant = () => {
                     <Form.Control required type="password" value={tenant.password}  placeholder="Password" />
                 </Form.Group>
                 <Button variant="primary" type="submit">
-                    Create client
+                    Add tenant
                 </Button>
 
             </Form>

@@ -8,6 +8,12 @@ function houseFacade() {
         return fetch(URL + "api/house/all", options).then(r => r.json());
     }
 
+    const createHouse = (house) => {
+        const options = makeOptions("POST", house,true); //True add's the token
+        return fetch(URL + "api/house/create", options).then(r => r.json());
+    }
+
+
 
     const makeOptions = (method, body, addToken) => {
         var opts = {
@@ -28,6 +34,7 @@ function houseFacade() {
 
     return{
         getAllHouses,
+        createHouse
 
     }
 }
