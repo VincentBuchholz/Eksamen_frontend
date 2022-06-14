@@ -56,8 +56,8 @@ const Header = ({logout}) => {
                         {
                             !isAdmin &&
 
-                            <LinkContainer to="/user1">
-                                <Nav.Link>user1</Nav.Link>
+                            <LinkContainer to="/myRentals">
+                                <Nav.Link>My Rentals</Nav.Link>
                             </LinkContainer>
 
                         }
